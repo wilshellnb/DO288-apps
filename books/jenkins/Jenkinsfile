@@ -5,13 +5,11 @@ pipeline {
     }
     agent {
       node {
-        //TODO: Add label for Node.js jenkins agent
         label 'nodejs'
       }
     }
 
     environment {
-        //TODO: Edit these vars as per your env
         DEV_PROJECT = "william-roberts-bellaliant-c-books-dev"
         STAGE_PROJECT = "william-roberts-bellaliant-c-books-stage"
         APP_GIT_URL = "https://github.com/wilshellnb/DO288-apps"
@@ -59,7 +57,6 @@ pipeline {
                    '''
 
                 echo '### Creating a new app in DEV env ###'
-                //TODO: Create a new app and expose the service
                 sh '''
                         oc project ${DEV_PROJECT}
                         oc new-app --as-deployment-config --name books nodejs:12~${APP_GIT_URL} \
@@ -108,7 +105,6 @@ pipeline {
                 timeout(time: 60, unit: 'MINUTES') {
                     input message: "Promote to Staging?"
                 }
-                //TODO: Tag the books:latest image stream as books:stage
                 script {
                   openshift.withCluster() {
                   openshift.tag("${DEV_PROJECT}/books:latest", "${STAGE_PROJECT}/books:stage")
@@ -127,12 +123,11 @@ pipeline {
                    '''
 
                 echo '### Creating a new app in Staging ###'
-                //TODO: Create a new app in stage using the books:stage image stream and expose the service
-                 sh '''
+                sh '''
                         oc project ${STAGE_PROJECT}
                         oc new-app --as-deployment-config --name books -i books:stage
                         oc expose svc/${APP_NAME}
-                    '''
+                   '''
             }
         }
 
