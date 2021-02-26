@@ -11,8 +11,8 @@ pipeline {
 
     environment {
         //TODO: Customize these variables for your environment
-        DEV_PROJECT = "william-roberts-belalliant-c-movies-dev"
-        STAGE_PROJECT = "william-roberts-belalliant-c-movies-stage"
+        DEV_PROJECT = "william-roberts-bellaliant-c-movies-dev"
+        STAGE_PROJECT = "william-roberts-bellaliant-c-movies-stage"
         APP_GIT_URL = "https://github.com/wilshellnb/DO288-apps"
         NEXUS_SERVER = "http://nexus-common.apps.na45.prod.nextcle.com/repository/java"
 
