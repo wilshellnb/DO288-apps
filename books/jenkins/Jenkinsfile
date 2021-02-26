@@ -135,17 +135,16 @@ pipeline {
             steps {
                 sh "oc get route ${APP_NAME} -n ${STAGE_PROJECT} -o jsonpath='{ .spec.host }' > routehost"
                 script {
-                    routeHost = readFile('routehost').trim()
-
+                    //routeHost = readFile('routehost').trim()
                     openshift.withCluster() {
-                        //TODO: Watch deployment until pod is in 'Running' state
                         openshift.withProject( "${STAGE_PROJECT}" ) {
                           def deployment = openshift.selector("dc", "${APP_NAME}").rollout()
                           openshift.selector("dc", "${APP_NAME}").related('pods').untilEac(1) {
                             return (it.object().status.phase == "Running")
                           }
                         }
-                        echo "Deployment to Staging env is complete. Access the app at the URL http://${routeHost}."
+                        echo "Deployment to Staging env is complete."
+                        // echo "Deployment to Staging env is complete. the app at the URL http://${routeHost}."
                     }
                 }
             }
